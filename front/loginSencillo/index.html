@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <div id="form-Body">
+      <div id="form-header">
+        <h1>Login</h1>
+      </div>
+      <div id="form-textFields">
+        <form id="form-login">
+          <label for="Username">*Username:</label>
+          <input type="text" id="Username" name="Username" placeholder="Usuario" required>
+          <br>
+          <label for="Password">*Password:</label>
+          <input type="password" id="Password" name="Password" required>
+          <br>
+          <button type="submit" id="form-login-btn">Login</button>
+        </form>
+      </div>
+    </div>
+    <div id="container-result">
+      <p id="resultado"></p>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
