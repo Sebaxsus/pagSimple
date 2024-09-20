@@ -15,7 +15,7 @@ const db = new sqlite3.Database(':memory:');
 //db.serialize se encarga de ejecutar los comandos en secuencia
 db.serialize(() => {
     //Creando la tabla usuarios
-    db.run('CREATE TABLE users (username TEXT, password TEXT)', (error) => {
+    db.run('CREATE TABLE users (usuario TEXT, contraseña TEXT)', (error) => {
         
         if (error) {
 
@@ -25,7 +25,7 @@ db.serialize(() => {
         console.log('Tabla Usuarios creada!');
 
         //Agregando un Usuario default Para probar la conectividad
-        db.run('INSERT INTO users (username, password) VALUES (?, ?)', ['admin', 'admin'], (error) => {
+        db.run('INSERT INTO users (usuario, contraseña) VALUES (?, ?)', ['admin', 'admin'], (error) => {
             
             if (error) {
                 //Mostrando el Error
@@ -57,21 +57,24 @@ db.serialize(() => {
 
 //Endpoint para manejar el Login
 app.post('/login', (request, response) =>{ //Si hay error puede ser el nombre de las variable ya que pueden ser palabras reservadas
-    const { username, password } = request.body;
+    const { usuario, contraseña } = request.body;
 
     //Limpiando La consola
     console.clear();
-    //Debug de lo que traigo de el front
-    console.log(request.body)
-    console.log('Body de la peticion:\n' + '\nUsuario: ' + username + '\nContraseña: ' + password);
 
-    db.get('SELECT * FROM users WHERE username = ? AND password = ?', [username, password], (error, row) => {
+    //Debug de lo que traigo de el front
+    console.log('Body de la peticion:');
+    console.log(request.body);
+
+    console.log('\nUsuario: ' + usuario + '\nContraseña: ' + contraseña);
+
+    db.get('SELECT * FROM users WHERE usuario = ? AND contraseña = ?', [usuario, contraseña], (error, row) => {
         if (error) {
             return response.status(500).json({ message: 'Error consultando la base de datos! :,(' });
         }
 
         if (row) {
-            response.json({ message: 'Login Exitoso!' });
+            response.json({ message: 'Login Exitoso!', usuario: row });
         } else {
             response.json({ message: 'Usuario o Contraseña Incorrectos >:|' });
         }
